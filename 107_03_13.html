@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>演算法</title>
+	<style type="text/css">
+		html{
+			font-size: 20px;
+		}
+		input[type='text']{
+			height: 24px;
+		}
+		input[type='button']{
+			height: 28px;
+		}
+		#output{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<h1>CSS選擇器</h1>
+	<a href="http://flukeout.github.io/" target="_blank">http://flukeout.github.io/</a>
+	<br><br><br>
+	<h1>演算法</h1>
+	<p>
+		題目：寫出一個function輸入字串輸出相對應的數字
+		<br>a -> 1		
+		<br>b -> 2
+		<br>.
+		<br>.
+		<br>.
+		<br>z -> 26
+		<br>aa -> 27
+		<br>ab -> 28
+		<br>.
+		<br>.
+		<br>.
+		<br>.
+		<br>.
+		<br>.
+	</p>
+	<input type="text" id= "input" placeholder="輸入" onkeypress="if (event.keyCode==13) {algorithm()}">
+	<input type="button" value="output" onclick="algorithm()">
+	<input type="text" id = "output" placeholder="輸出">
+	
+	<script type="text/javascript">
+
+		function algorithm () {
+			var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+			//1.取值 2.轉成大寫 3.拆成陣列 4.顛倒(因為位數是相反的(個位數在後面))
+			var val = document.getElementById('input').value.toUpperCase().split('').reverse()
+			var mul = 1 //計算次方乘積
+			var result = 0 //結果
+			var length = val.length
+
+			for(var digits=0 ; digits<length ; digits++){	//digits：第幾位數
+															
+				var iIndex = str.indexOf(val[digits]) + 1
+
+				//個位數的時候不用計算乘積
+				if (digits === 0) {
+					result += iIndex
+				}
+
+
+				else{
+					for(var power=0 ; power<digits ; power++){	//power：計算次方
+						mul = mul*26	
+					}
+					mul *= iIndex	//計算乘積
+					result += mul	
+				}
+				mul = 1
+			}
+			document.getElementById('output').value = result
+		}
+
+	</script>
+</body>
+</html>

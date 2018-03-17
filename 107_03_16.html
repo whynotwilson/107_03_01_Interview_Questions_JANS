@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>107/3/16 JavaScript</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+		html{
+			font-size: 20px;
+		}
+		span{
+			font-weight: bold;
+			font-size: 25px;
+		}
+		.answer{
+			color:blue;
+			margin-bottom: 50px;
+			display: block;
+		}
+		.question{
+			margin-top: 50px;
+		}
+	</style>
+</head>
+<body>
+	<h1>JavaSctipt</h1>
+	<button id="hideAnswer">隱藏答案</button>
+	<button id="showAnswer">顯示答案</button>
+
+	<pre class="question"><span>Q1.</span>
+Which is false?
+
+A.12=='12'
+B.NaN == NaN
+C.1 == [1]+[]
+D.undefined === undefined
+</pre>
+<pre class="answer">
+B
+
+undefined === undefined
+NaN != NaN
+
+[1] + ['ab'] = 1ab
+[1,2,3] + ['test'] = 1,2,3test
+[1,2,3] + [1] = 1,2,31
+[1,2,3] + [1 ,3 ,5] = 1,2,31,3,5
+
+a = [1] //typeof a = object
+a = [1,2,3] //typeof a = object
+
+a = [1] + [2] //typeof a = string
+a = [1,2,3] + [1,3,5] = 1,2,31,3,5 //typeof a = string
+
+</pre>
+
+<pre class="question"><span>Q2.</span>
+Which is true ?
+
+A.1 === true
+B.Number('1px')
+C.typeof[1,2,3] == 'array'
+D.'false'
+</pre>
+
+<pre class="answer">
+D
+
+(1 === true) : false
+(1 == true) : true
+Number(0) = false
+Number(1) = true
+Number(NaN) = false
+
+</pre>
+
+
+<pre class="quesion"><span>Q3.</span>
+var bar = [1,2,3];
+console.log(typeof bar);
+//the value will be?</pre>
+<pre class="answer">
+object
+
+typeof 共有七種值
+number
+string
+boolean
+object
+function
+undefined
+unknown
+
+<a href="https://docs.microsoft.com/zh-tw/scripting/javascript/reference/typeof-operator-decrementjavascript" target="_blank">typeof 運算子</a>
+
+</pre>
+
+<pre class="question"><span>Q4.</span>
+var a = [1,2,3]
+var b = a
+a[1] = 5
+console.log(b) //the value will be?
+</pre>
+<pre class="answer">
+1,5,3
+<a href="https://pjchender.blogspot.tw/2016/03/javascriptby-referenceby-value.html" target="_blank">by value 和 by reference</a>
+</pre>
+
+<pre class="question"><span>Q5.</span>
+var a = 5
+console.log('ac' + a === 5 ? true : false)
+</pre>
+<pre class="answer">
+false (數字+字串 = 連接起來 ex: 'ac' + 5 = ac5)
+
+<a href="https://www.w3cplus.com/javascript/javascriptss-addition-operator-demystified.html" target="_blank">加號操作細節</a>
+</pre>
+
+
+<pre class="question"><span>Q6.</span>
+(function(){
+	var a = b = 5
+})();
+console.log( a ); //the value will be?
+console.log( b ); //the value will be?
+</pre>
+<pre class="answer">
+Uncaught ReferenceError: a is not defined
+外部無法存取區域變數
+</pre>
+
+
+<pre class="question"><span>Q7.</span>
+function foo() {
+	var a = 2
+	this.bar()
+}
+function bar() {
+	console.log(this.a)
+}
+
+foo() // the value will be?
+</pre>
+<pre class="answer">
+undefined
+
+因為foo 是個function 所以this會往外找 
+this 會指向 Window 然後進到bar() 
+bar裡面的this也是指Window 
+Window沒有a變數 
+所以是undefined
+</pre>
+
+
+<pre class="question"><span>Q8.</span>
+function bar() {
+	foo = 10
+	return foo
+	function foo(){}
+	var foo = '11'
+}
+console.log(typeof bar())
+</pre>
+<pre class="answer">
+number
+
+當return後就跳出function 
+不會再繼續
+
+function foo(){} //是function名稱叫foo
+
+foo = 10
+function foo(){}
+return foo
+return是回傳"變數"foo 所以一樣是number
+
+foo = 10
+foo = function () {}
+return foo
+這樣才會是回傳function
+</pre>
+
+
+<pre class="question"><span>Q9.</span>
+var a = [1,2,3]
+a['b'] = 8
+a['6'] = 5
+a.forEach(function(el){
+	console.log( el )
+}); //what is the output
+
+for(var item in a){
+	console.log( item );
+}//what isthe output
+</pre>
+<pre class="answer">
+a = [1, 2, 3, empty , empty , empty , 5, b: 8]
+
+el:	item:
+1	0
+2	1
+3	2
+5	6
+	b
+
+forEach只能處理 index 為數字的值 
+ex: 1,2,3,4,5	 //OK
+a['b'],a['test'] //無法使用
+所以不會顯示8
+
+for in則都可以
+
+a[b] = undefined
+a['b'] = 8
+a[6]   = 5
+a['6'] = 5
+</pre>
+
+
+<pre class="question"><span>Q10.</span>
+var fun = function(a){
+  if(a){
+	console.log('yes')
+  }else{
+    console.log{'no'}
+  }
+}
+fun()
+fun(0)
+fun('false')
+fun(NaN)
+fun([])
+fun({})
+
+</pre>
+<pre class="answer">
+
+「在javaScript中，Object、function、非0的整數和字符串皆為 true ，
+null、undefined、空字符串''為 false 」
+
+fun() : no
+fun(0) : no
+fun("false") : yes
+fun(NaN) : no
+fun([]) : yes
+fun({}) : yes
+fun(Q1()) : yes
+fun(Q1) : yes
+fun(null) : no
+fun(undefined) : no
+fun("") : no
+
+<a href="https://imys.net/20150424/js-simple-condition.html" target="_blank">javaScript 邏輯運算符</a>
+</pre>
+
+<pre class="question"><span>Q11.</span>
+var obj = {
+  a:'red',
+  b:{
+    c:'dog',
+    d:function(){return 'cat' }
+  }
+}
+1.如何console出'red'?
+2.如何console出'dog'?
+3.如何console出'cat'?
+</pre>
+<pre class="answer">
+console.log(obj.a)
+console.log(obj.b.c)
+console.log(obj.b.d())
+</pre>
+
+
+
+<pre class="question"><span>Q12.</span>
+var fun = function (a) {
+	console.log(a)
+	console.log(arguments)
+}
+1.fun() //會發生什麼事?
+2.fun(1,2,3,'abc') //會發生什麼事?
+</pre>
+<pre class="answer">
+
+undefined
+Argument空物件
+
+1 //會把arguments[0]當做a
+Arguments(4) [1, 2, 3, "abc", callee: ƒ, Symbol(Symbol.iterator): ƒ]
+
+<a href="http://www.w3school.com.cn/js/pro_js_functions_arguments_object.asp" target="_blank">ECMAScript arguments 對象</a>
+<a href="https://www.youtube.com/watch?v=rDlkbhsymfo" target="_blank">JavaScript Arguments Object Function Tutorial</a>
+
+</pre>
+
+<pre class="question"><span>Q13.</span>
+var create = function() {
+  var a = 1
+  console.log(++a)
+  return function(){
+    console.log(a++)
+  }
+}
+
+create()() //會發生什麼事?
+var a = create()
+a();a(); //會發生什麼事?
+
+</pre>
+<pre class="answer">
+var create = function() {
+  var a = 1
+  console.log(++a)
+  return function(){
+    console.log('進到1')
+
+    return function () {
+      console.log('進到第二層')
+    }
+  }
+}
+
+create() : 
+2
+
+create()() : 
+2
+進到1
+
+create()()() : 
+2
+進到1
+進到第二層
+
+測試結論：
+括號的意思是「執行」
+當 return 的是 function 時，
+遇到小括號的話會執行該function
+
+
+var a = create() 
+a();a(); //會發生什麼事?
+
+2
+進到1
+進到1
+
+
+create會執行後將 return 的 function 給 a
+所以印出 2
+a = function(){ 
+    console.log('進到1') 
+    return function () {
+      console.log('進到第二層')
+  }
+}
+
+
+
+</pre>
+
+
+
+<pre class="question"><span>Q14.</span>
+var fun = function(setting) {
+	setting.value += setting.value + '@'
+	console.log(setting.value)
+}
+var value = { value:'red' }
+fun(value); fun(value);//執行二次的結果分別為?
+</pre>
+<pre class="answer">
+var fun = function(setting) {
+
+  function test(setting2) {
+    setting2.value += setting2.value + '@'
+    //console.log(setting2.value)
+  }
+  test(setting)
+  //再往內一層一樣可以更改全域的value物件
+}
+
+var value = { value:'red' }
+
+fun(value)
+console.log(value)  //redred@
+
+fun(value)
+console.log(value)  //redred@redred@@
+
+function 內部可以讀取到外部的變數
+外層無法讀取 function 內的區域變數
+ex: 第六題
+
+</pre>
+
+
+
+<pre class="question"><span>Q15.</span>
+var obj = {
+  fun1 : function(a){
+    console.log(++a)
+    return obj;
+  }
+  fun2 : function(a){
+    var b = a++;
+    console.log(b)
+    return this;
+  }
+}
+
+obj.fun1(1).fun2(2);  //log會印出什麼
+</pre>
+<pre class="answer">
+
+2
+2
+
+obj.fun1(1).fun2(2);
+這行程式碼可以看成二部分
+
+一.
+obj.fun(1)
+
+fun(1){
+  console.log(++a)
+  return obj;
+}
+//執行完console.log(++a)之後，
+//回傳obj{fun1: f, fun2: f}
+
+二.
+obj.fun(2)
+
+所以現在的"obj.fun1(1)".fun2(2);
+可以看成"obj".fun2(2)
+
+
+如果是計算值，則由左至右
+var a = 1
+var b = a++; //先看到a，所以先賦予值，故b=1
+var c = ++a; //先看到+，所以先執行a+1 再賦予值給c，故c=3
+
+如果是賦予值，則由右至左
+var a = b = 5
+先執行b=5 //且b前面無var，所以是全域變數
+才執行a=b
+
+<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence" target="_blank">運算符優先級</a>
+</pre>
+
+
+
+
+<script type="text/javascript">
+	function Q1 () {
+		if(undefined === undefined){
+			console.log('(undefined === undefined) : true')
+		}else{
+			console.log('(undefined === undefined) : false')
+		}
+		console.log('')
+
+		if (undefined == null) {
+			console.log('(undefined == null) : true')
+		}else{
+			console.log('(undefined == null) : false')
+		}
+		console.log('')
+
+
+		if (undefined === null) {
+			console.log('(undefined === null) : true')
+		}else{
+			console.log('(undefined === null) : false')
+		}
+		console.log('')
+
+
+		if(NaN == NaN){
+			console.log('NaN == NaN')
+		}else{
+			console.log('(NaN == NaN) : false')
+		}
+
+		if (Number(0)) {
+			console.log('Number(0)')
+		}else{
+			console.log('Number(0) = false')
+		}
+
+		if (Number(1)) {
+			console.log('Number(1) = true')
+		}else{
+			console.log('Number(1) = false')
+		}
+
+		var a = [1] + ['ab']
+		console.log("[1] + ['ab'] = " + a)
+		console.log('')
+
+		a = [1,2,3] + ['test']
+		console.log("[1,2,3] + ['test'] = " + a)
+		console.log('')
+
+		a = [1,2,3] + [1]
+		console.log("[1,2,3] + [1] = " + a)
+		console.log('')
+
+		a = [1,2,3] + [1 ,3 ,5]
+		console.log("[1,2,3] + [1 ,3 ,5] = " + a)
+		console.log('')
+
+		a = [1]
+		console.log('a = [1]')
+		console.log('typeof a = ' + typeof a)
+		console.log('')
+
+		a = [1,2,3]
+		console.log('a = [1,2,3]')
+		console.log('typeof a = ' + typeof a)
+		console.log('')
+
+		a = [1] + [2]
+		console.log('a = [1] + [2]' + ' = ' + a)
+		console.log('typeof a = ' + typeof a)
+		console.log('')
+
+		a = [1,2,3] + [1,3,5]
+		console.log('a = [1,2,3] + [1,3,5] = ' + a)
+		console.log('typeof a = ' + typeof a)		
+		console.log('')
+
+		a = a.split('')
+		console.log(a)
+		console.log('')
+
+
+		if (!(12 == '12')) {
+			return 'A'
+		}
+		if (!(1 == [1]+[])) {
+			return 'C'
+		}
+		if (!(undefined === undefined)) {
+			return 'D'
+		}
+		if (!(NaN == NaN)) {
+			return 'B'
+		}
+	}
+	console.log('Q1 : ' + Q1())
+
+	function Q2 () {
+		if (1 === true) {
+			console.log( '(1 === true) : true')
+		}else{
+			console.log( '(1 === true) : false')
+		}
+
+		console.log('')
+		if (1 == true) {
+			console.log( '(1 == true) : true')
+		}else{
+			console.log( '(1 == true) : false')
+		}
+
+		console.log('')
+		if (Number(NaN)) {
+			console.log( '(Number(NaN)) : true')
+		}else{
+			console.log( '(Number(NaN)) : false')
+		}
+
+
+		if (1 === true) {
+			return 'A'
+		}
+		if (Number('1px')) {
+			return 'B'
+		}
+		if (typeof[1,2,3] == 'array') {
+			return 'C'
+		}
+		if ('false') {
+			return 'D'
+		}
+	}
+
+	console.log('Q2 : ' + Q2())
+
+	function Q3 () {
+		var bar = [1,2,3];
+		console.log('Q3 : ' + typeof bar);
+	}
+	Q3()
+
+	function Q4 () {
+		var a = [1,2,3]
+		var b = a
+		a[1] = 5
+		console.log('Q4 : ' )
+		console.log(b)
+	}
+	Q4()
+	console.log('')
+
+	function Q5 () {
+		var a = 5
+		var Q5answer = 'ac' + a === 5 ? true : false
+		var example = 'ac' + a
+		// console.log(example)
+		console.log("Q5 : "  + Q5answer)
+	}
+	Q5();
+	console.log('')
+	
+	function Q6 () {
+		(function(){
+			var a = b = 5
+			console.log( 'a = ' + a + '(IIFE內部)') 
+		})();
+
+		console.log('Q6 : ')
+		//console.log( a ); //the value will be?
+		console.log( 'console.log( b ) = ' + b ); //the value will be?
+	}
+	Q6();
+	console.log('')
+
+
+	function Q7_foo() {
+		var a = 2
+		this.Q7_bar()
+	}
+	function Q7_bar() {
+		console.log(this.a)
+	}
+
+	console.log('Q7 : ')
+	Q7_foo() // the value will be?
+	console.log('')
+
+
+	function Q8() {
+		var foo = 10
+		return foo
+		//function foo(){}
+		foo = function (){}
+		var foo = '11'	
+	}
+	console.log('Q8 : ')
+	console.log(typeof Q8())
+	//console.log(Q8())
+	console.log('')
+
+	function Q9 () {
+		var a = [1,2,3]
+		a['b'] = 8
+		a['6'] = 5
+		a['c'] = 'test'
+
+		console.log(a)
+		console.log('a = ' + a)
+		console.log('a[b] = ' + a[b])
+		console.log("a['b'] = " + a['b'])
+		console.log('a[6] = ' + a[6])
+		console.log("a['6'] = " + a['6'])
+		a.forEach(function(value , index){
+			console.log( index , value)
+		}); //what is the output
+
+		for(var item in a){
+			console.log( item );
+		}//what isthe output/**/
+
+		//追加測試
+		/*console.log('開始')
+		for(var item in a){
+			console.log('item = ' + item)
+			console.log('a[' + item + '] = ' + a[item])
+		}*/
+		
+	}
+	console.log('Q9 : ')
+	Q9()
+
+	function Q10() {
+		
+		var fun = function(a){
+
+			if(a){
+				return 'yes'
+			}else{
+				return 'no'
+			}
+
+		}
+		console.log( 'fun() : ' + fun() )
+		console.log( 'fun(0) : ' + fun(0) )
+		console.log( 'fun("false") : ' + fun('false') )
+		console.log( 'fun(NaN) : ' + fun(NaN) )
+		console.log( 'fun([]) : ' + fun([]) )
+		console.log( 'fun({}) : ' + fun({}) )
+		console.log( 'fun(Q1()) : ' + fun(Q1()))
+		console.log( 'fun(Q1) : ' + fun(Q1))
+		console.log( 'fun(null) : ' + fun(null))
+		console.log( 'fun(undefined) : ' + fun(undefined))
+		console.log( 'fun("") : ' + fun(""))
+
+	}
+	Q10()
+
+	function Q11 () {
+		var obj = {
+			a:'red',
+			b:{
+				c:'dog',
+				d:function(){
+					return 'cat'
+				}
+			}
+		}
+		// 1.如何console出'red'?
+		// 2.如何console出'dog'?
+		// 3.如何console出'cat'?
+		console.log(obj.a)
+		console.log(obj.b.c)
+		console.log(obj.b.d())
+	}
+	Q11()
+
+	console.log('')
+	console.log('')
+	console.log('')
+	console.log('')
+
+	function Q12 () {
+		var fun = function (a) {
+			console.log(a)
+			console.log(arguments)
+		}
+		console.log('fun() : ')
+		fun()
+		
+		console.log('')
+		console.log('')
+
+		console.log('fun(1,2,3,"abc")')
+		fun(1,2,3,'abc') //會發生什麼事?
+	}
+	Q12()
+
+
+	function Q13() {
+		var create = function() {
+		  var a = 1
+		  console.log(++a)
+		  return function(){
+
+		    console.log('進到1')
+		    return function () {
+
+		    	console.log('進到第二層')
+
+		    }
+		  }
+		}
+
+		console.log('create() : ')
+		create() //會發生什麼事?
+		console.log('')
+
+		console.log('create()() : ')
+		create()()
+		console.log('')
+
+		console.log('create()()() : ')
+		create()()()
+		console.log('')
+
+		console.log( 'create : ' )
+		console.log( create )
+		console.log('')
+		console.log('')
+
+		
+
+		var a = create()
+		console.log('a = create ')
+				
+		a();a(); //會發生什麼事?
+	}
+
+	console.log('')
+	console.log('')
+	console.log('Q13 : ')
+	Q13()
+
+
+
+	function Q14() {
+
+		/*var fun = function(setting) {
+			setting.value += setting.value + '@'
+			console.log(setting.value)
+		}*/
+
+		var fun = function(setting) {
+
+			function test(setting2) {
+				setting2.value += setting2.value + '@'
+				//console.log(setting2.value)
+			}
+			test(setting)
+		}
+
+		console.log('');console.log('');
+
+		var value = { value:'red' }
+
+		fun(value);//redred@
+		console.log(value)
+
+		fun(value);//redred@redred@@
+		console.log(value)
+
+	}
+	Q14()
+
+
+	function Q15() {
+
+		/*var obj = {
+			fun1 : function(a){
+				console.log(++a)
+				return obj;
+			},
+			fun2 : function(a){
+				var b = a++;
+				console.log(b)
+				return this;
+			}
+		}*/
+
+		var obj = {
+			fun1 : function(a){
+				console.log(++a)
+				return obj;
+			},
+			fun2 : function(a){
+				var b = a++;
+				console.log(b)
+				return this;
+			}
+		}
+		obj.fun1(1).fun2(2);  //
+	}
+
+	Q15()
+
+	var hide = document.getElementById('hideAnswer')
+	hide.onclick = function () {
+		var elems = document.getElementsByClassName("answer")
+		for(var i=0 ; i<elems.length ; i++){
+			elems[i].style.display = "none";
+		}
+	}
+
+	var showAnswer = document.getElementById('showAnswer')
+
+	showAnswer.onclick = function () {
+		var elems = document.getElementsByClassName("answer")
+		for(var i=0 ; i<elems.length ; i++){
+			elems[i].style.display = "block";
+		}
+	}
+	
+	/*var IIFE_test = (function(){
+		var a = 1
+		return function getA() {
+			return a
+		}
+	})();
+	console.log('IIFE_test : ' + IIFE_test)
+	console.log(IIFE_test())*/
+
+
+	//test
+	/*function Foo() {  
+
+	    var a = 123;
+	    this.a = 456;
+
+	    (function() {  
+	        alert(a); // 123,全局
+	        alert(this.a); // 
+	        this.b = 789; // window.b = 789 
+	    })();
+
+
+	    (function() {  
+	        alert(this.b); // 789, window.b 
+	    })();  
+
+	}  
+
+	Foo() */
+
+</script>
+</body>
+</html>
